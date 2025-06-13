@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Рынок нефтепродуктов</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Каталог нефтепродуктов</h1>
+    
+    <!-- Поиск и сортировка -->
+    <form method="get">
+        <input type="text" name="search" placeholder="Поиск..." value="{{ search_query }}">
+        <select name="sort">
+            <option value="name" {% if sort_by == 'name' %}selected{% endif %}>По названию</option>
+            <option value="-name" {% if sort_by == '-name' %}selected{% endif %}>По названию (убыв.)</option>
+        </select>
+        <button type="submit">Применить</button>
+    </form>
+    
+    <!-- Ссылки на отчеты -->
+    <p>
+        <a href="{% url 'transactions_report' %}" target="_blank">Отчет по сделкам (PDF)</a> |
+        <a href="{% url 'sales_chart' %}" target="_blank">График продаж</a>
+    </p>
+    
+    <!-- Таблица продуктов -->
+    <table>
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Описание</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
